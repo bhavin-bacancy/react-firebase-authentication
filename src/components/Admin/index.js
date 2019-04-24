@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { withAuthorization } from '../Session';
 
 const styles = {
 	HeadingWrapeer: {
@@ -17,5 +18,6 @@ class Admin extends Component {
 		)
 	}
 }
+const condition = authUser => !!authUser;
 
-export default Admin
+export default withAuthorization(condition)(Admin);

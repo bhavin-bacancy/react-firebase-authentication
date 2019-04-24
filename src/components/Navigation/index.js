@@ -33,6 +33,7 @@ const NavigationAuth = () => (
 		<Link style={styles.navigationLink} to={ROUTES.HOME}><i class="fa fa-home"></i> Home</Link>
 		<Link style={styles.navigationLink} to={ROUTES.DASHBOARD}><i class="fa fa-desktop"></i> Dashboard</Link>
 		<Link style={styles.navigationLink} to={ROUTES.ACCOUNT}><i class="fa fa-user"></i> Account</Link>
+    <Link style={styles.navigationLink} to={ROUTES.ADMIN}><i class="fas fa-user-cog"></i> Admin</Link>
 		<SignOut />
 	</div>
 );

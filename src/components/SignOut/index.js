@@ -16,7 +16,6 @@ class SignOut extends Component {
 		firebase.doSignOut()
 			.then(() => {
 				alert("User successfully logout...!!!");
-				this.props.history.push(ROUTES.HOME);
 			})
 			.catch(error => {
 				this.setState({ error });
