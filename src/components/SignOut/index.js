@@ -25,7 +25,7 @@ class SignOut extends Component {
 	render() {
 		return (
 			<div>
-				<Link style={styles.signOutLink} onClick={this.onSignOut}><i class="fas fa-sign-out-alt"></i> Sign Out </Link>
+				<Link style={styles.signOutLink} onClick={this.onSignOut}><i className="fas fa-sign-out-alt"></i> Sign Out </Link>
 			</div>
 		)
 	}

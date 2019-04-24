@@ -30,19 +30,19 @@ const Navigation = () => (
 );
 const NavigationAuth = () => (
 	<div style={styles.wrapper}>
-		<Link style={styles.navigationLink} to={ROUTES.HOME}><i class="fa fa-home"></i> Home</Link>
-		<Link style={styles.navigationLink} to={ROUTES.DASHBOARD}><i class="fa fa-desktop"></i> Dashboard</Link>
-		<Link style={styles.navigationLink} to={ROUTES.ACCOUNT}><i class="fa fa-user"></i> Account</Link>
-    <Link style={styles.navigationLink} to={ROUTES.ADMIN}><i class="fas fa-user-cog"></i> Admin</Link>
+		<Link style={styles.navigationLink} to={ROUTES.HOME}><i className="fa fa-home"></i> Home</Link>
+		<Link style={styles.navigationLink} to={ROUTES.DASHBOARD}><i className="fa fa-desktop"></i> Dashboard</Link>
+		<Link style={styles.navigationLink} to={ROUTES.ACCOUNT}><i className="fa fa-user"></i> Account</Link>
+    <Link style={styles.navigationLink} to={ROUTES.ADMIN}><i className="fas fa-user-cog"></i> Admin</Link>
 		<SignOut />
 	</div>
 );
 
 const NavigationNonAuth = () => (
 	<div style={styles.wrapper}>
-		<Link style={styles.navigationLink} to={ROUTES.HOME}><i class="fa fa-home"></i> Home</Link>
-		<Link style={styles.navigationLink} to={ROUTES.SIGN_UP}><i class="fa fa-user-plus"></i> Sign Up</Link>
-		<Link style={styles.navigationLink} to={ROUTES.SIGN_IN}><i class="fas fa-sign-in-alt"></i> Sign In</Link>
+		<Link style={styles.navigationLink} to={ROUTES.HOME}><i className="fa fa-home"></i> Home</Link>
+		<Link style={styles.navigationLink} to={ROUTES.SIGN_UP}><i className="fa fa-user-plus"></i> Sign Up</Link>
+		<Link style={styles.navigationLink} to={ROUTES.SIGN_IN}><i className="fas fa-sign-in-alt"></i> Sign In</Link>
 	</div>
 );
 

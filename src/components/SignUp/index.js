@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { withFirebase } from '../Firebase';
+import { NotificationManager } from 'react-notifications';
 import { compose } from 'recompose';
 import * as ROUTES from '../../constants/routes';
 
@@ -62,11 +63,13 @@ class SignUp extends Component {
 			.doCreateUserWithEmailAndPassword(email, password)
 			.then(authUser => {
 				this.setState({ ...Initialstate });
-				alert("User successfully registerd...!!!");
+				debugger;
+				NotificationManager.success('User successfully registerd');
 				this.props.history.push(ROUTES.SIGN_IN);
 			})
 			.catch(error => {
 				this.setState({ error });
+				NotificationManager.error(error);
 			});
 	}
 

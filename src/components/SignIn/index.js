@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
 import { withFirebase } from '../Firebase';
+import { NotificationContainer, NotificationManager } from 'react-notifications';
 import * as ROUTES from '../../constants/routes';
+import 'react-notifications/lib/notifications.css';
 
 const Initialstate = {
 	email: '',
@@ -36,7 +38,7 @@ const styles = {
 	},
 	signInLink: {
 		textDecoration: 'none',
-		fontSize:'15px',
+		fontSize: '15px',
 	},
 }
 
@@ -53,6 +55,16 @@ class SignIn extends Component {
 		this.state = { ...Initialstate };
 	}
 
+	createNotification = (type) => {
+		if(type === 'success'){
+			return NotificationManager.success("User logged in successfully");
+			this.props.history.push(ROUTES.HOME);
+		}
+		else {
+			return NotificationManager.error("Something went wrong");
+		}
+	};
+
 	onSubmit = event => {
 		event.preventDefault();
 		const { email, password } = this.state;
@@ -60,10 +72,11 @@ class SignIn extends Component {
 			.doSignInWithEmailAndPassword(email, password)
 			.then(() => {
 				this.setState({ ...Initialstate });
-				alert("User successfully login...!!!");
-				this.props.history.push(ROUTES.HOME);
+				this.createNotification('success');
+				// this.props.history.push(ROUTES.HOME);
 			})
 			.catch(error => {
+				this.createNotification('error');
 				this.setState({ error });
 			});
 	};
@@ -105,9 +118,10 @@ class SignIn extends Component {
 				<p style={{ textAlign: 'center', marginTop: '40px' }}>
 					Don't have an account? &nbsp;<Link style={styles.signInLink} to={ROUTES.SIGN_UP}>Sign Up</Link>
 				</p>
-				<p style={{ textAlign: 'center'}}>
-					<Link style={styles.signInLink} to={ROUTES.PASSWORD_FORGET}><i class="fas fa-key"></i> Forgot Password?</Link>
+				<p style={{ textAlign: 'center' }}>
+					<Link style={styles.signInLink} to={ROUTES.PASSWORD_FORGET}><i className="fas fa-key"></i> Forgot Password?</Link>
 				</p>
+				<NotificationContainer />
 			</div>
 		)
 	}
