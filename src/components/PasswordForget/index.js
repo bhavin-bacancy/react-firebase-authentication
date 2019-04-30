@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { withFirebase } from '../Firebase';
+import { NotificationContainer, NotificationManager } from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
 
 const Initialstate = {
 	email: '',
@@ -44,6 +46,15 @@ class PasswordForget extends Component {
 		this.state = { ...Initialstate };
 	}
 
+	createNotification = (type, error = '') => {
+		if (type === 'success') {
+			return NotificationManager.success("Email send successfully");
+		}
+		else {
+			return NotificationManager.error(error.message);
+		}
+	};
+
 	onSubmit = event => {
 		event.preventDefault();
     const { email } = this.state;
@@ -51,9 +62,10 @@ class PasswordForget extends Component {
       .doPasswordReset(email)
       .then(() => {
 				this.setState({ ...Initialstate });
-				alert("Email send successfully...!!!");
+				this.createNotification('success');
       })
       .catch(error => {
+				this.createNotification('', error);
         this.setState({ error });
       });
   };
@@ -68,8 +80,7 @@ class PasswordForget extends Component {
 
 		return (
 			<div style={ styles.forgetForm }>
-				{error && <p style={{ color: 'red' }}>{error.message}</p>}
-				<h4 style={{ color: 'darkred' }}> Forgot Password </h4>
+				<h3 style={{ color: 'darkred' }}> Forgot Password </h3>
 				<form onSubmit={this.onSubmit}>
 					<div>
 						<label style={styles.forgetLabel} >Email : </label>
@@ -83,6 +94,7 @@ class PasswordForget extends Component {
 					<br/>
 					<button style={styles.forgetButton} disabled={isInvalid} type="submit"> Reset Password </button>
 				</form>
+				<NotificationContainer />
 			</div>
 		)
 	}

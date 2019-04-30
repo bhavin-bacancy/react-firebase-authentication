@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { withAuthorization } from '../Session';
-import Notification from '../Notification';
 
 const styles = {
 	HeadingWraper: {
@@ -11,11 +10,11 @@ const styles = {
 }
 
 class Dashboard extends Component {
+
 	render () {
 		return (
 			<div>
 				<h4 style={ styles.HeadingWraper }> Welcome to Dashboard </h4>
-				<Notification />
 			</div>
 		)
 	}

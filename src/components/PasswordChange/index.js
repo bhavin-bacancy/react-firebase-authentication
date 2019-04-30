@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { withFirebase } from '../Firebase';
+import { NotificationContainer, NotificationManager } from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
 
 const Initialstate = {
 	password: '',
@@ -40,6 +42,15 @@ class PasswordChange extends Component {
 		this.state = { ...Initialstate };
 	}
 
+	createNotification = (type, error = '') => {
+		if (type === 'success') {
+			return NotificationManager.success("Password updated successfully");
+		}
+		else {
+			return NotificationManager.error(error.message);
+		}
+	};
+
 	onSubmit = event => {
 		event.preventDefault();
 		const { password } = this.state;
@@ -47,9 +58,10 @@ class PasswordChange extends Component {
 			.doPasswordUpdate(password)
 			.then(() => {
 				this.setState({ ...Initialstate });
-				alert("Password updated successfully...!!!");
+				this.createNotification('success');
 			})
 			.catch(error => {
+				this.createNotification('', error);
 				this.setState({ error });
 			});
 	};
@@ -63,8 +75,7 @@ class PasswordChange extends Component {
 		const isInvalid = password !== conf_password || password === '';
 		return (
 			<div style={styles.changepwdForm}>
-				{error && <p style={{ color: 'red' }}>{error.message}</p>}
-				<h4 style={{ color: 'darkred' }}> Change Password </h4>
+				<h3 style={{ color: 'darkred' }}> Change Password </h3>
 				<form onSubmit={this.onSubmit}>
 					<div>
 						<label style={styles.changepwdLabel}>New Password : </label>

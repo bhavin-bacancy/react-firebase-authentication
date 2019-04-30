@@ -16,7 +16,7 @@ class Account extends Component {
 			<AuthUserContext.Consumer>
 				{authUser => (
 					<div>
-						<span style={styles.HeadingWraper}>Welcome {authUser.email}</span>
+						<h4 style={styles.HeadingWraper}>Welcome {authUser.email}</h4>
 						<PasswordChange />
 					</div>
 				)}

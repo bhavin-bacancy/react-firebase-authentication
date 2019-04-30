@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { withFirebase } from '../Firebase';
-import { NotificationManager } from 'react-notifications';
+import { NotificationManager, NotificationContainer } from 'react-notifications';
 import { compose } from 'recompose';
 import * as ROUTES from '../../constants/routes';
+import 'react-notifications/lib/notifications.css'; 
 
 const Initialstate = {
 	username: '',
@@ -56,6 +57,15 @@ class SignUp extends Component {
 		this.state = { ...Initialstate };
 	}
 
+	createNotification = (type, error = '') => {
+		if (type === 'success') {
+			return NotificationManager.success("User registerd successfully ");
+		}
+		else {
+			return NotificationManager.error(error.message);
+		}
+	};
+
 	onSubmit = event => {
 		event.preventDefault();
 		const { email, password } = this.state;
@@ -63,13 +73,15 @@ class SignUp extends Component {
 			.doCreateUserWithEmailAndPassword(email, password)
 			.then(authUser => {
 				this.setState({ ...Initialstate });
-				debugger;
-				NotificationManager.success('User successfully registerd');
-				this.props.history.push(ROUTES.SIGN_IN);
+				this.props.history.push({
+					pathname: ROUTES.SIGN_IN,
+					state: { message: 'success' }
+				});
+				this.createNotification('success');
 			})
 			.catch(error => {
+				this.createNotification('', error);
 				this.setState({ error });
-				NotificationManager.error(error);
 			});
 	}
 
@@ -82,8 +94,7 @@ class SignUp extends Component {
 		const isInvalid = password !== conf_password || password === '' || email === '' || username === '';
 		return (
 			<div style={styles.signUpForm}>
-				{error && <p style={{ color: 'red' }}>{error.message}</p>}
-				<h4 style={{ color: 'darkred' }}> Create an account </h4>
+				<h3 style={{ color: 'darkred' }}> Create an account </h3>
 				<form onSubmit={this.onSubmit} style={{ justifyContent: 'center' }}>
 					<div>
 						<label style={styles.signUpLabel}>Username : </label>
@@ -130,6 +141,7 @@ class SignUp extends Component {
 				<p style={{ textAlign: 'center', marginTop: '40px' }}>
 					Already have an account? &nbsp;<Link style={styles.signInLink} to={ROUTES.SIGN_IN}>Sign In</Link>
 				</p>
+				<NotificationContainer />
 			</div>
 		)
 	}

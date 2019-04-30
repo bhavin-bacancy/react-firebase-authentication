@@ -8,7 +8,7 @@ const styles = {
 	wrapper: {
 		display: 'flex',
 		justifyContent: 'space-evenly',
-		backgroundColor: 'lightgray',
+		backgroundColor: 'darkgrey',
 		height: '50px',
 		alignItems: 'center',
 		textDecoration: 'none',

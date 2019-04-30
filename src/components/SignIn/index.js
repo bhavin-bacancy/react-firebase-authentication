@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import { Link, withRouter, Redirect } from 'react-router-dom';
 import { compose } from 'recompose';
 import { withFirebase } from '../Firebase';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
@@ -55,13 +55,12 @@ class SignIn extends Component {
 		this.state = { ...Initialstate };
 	}
 
-	createNotification = (type) => {
+	createNotification = (type, error = '') => {
 		if(type === 'success'){
-			return NotificationManager.success("User logged in successfully");
-			this.props.history.push(ROUTES.HOME);
+			return NotificationManager.success(this.props.location.state);
 		}
 		else {
-			return NotificationManager.error("Something went wrong");
+			return NotificationManager.error(error.message);
 		}
 	};
 
@@ -72,11 +71,12 @@ class SignIn extends Component {
 			.doSignInWithEmailAndPassword(email, password)
 			.then(() => {
 				this.setState({ ...Initialstate });
-				this.createNotification('success');
-				// this.props.history.push(ROUTES.HOME);
+				this.props.history.push({
+					pathname: ROUTES.DASHBOARD,
+				});
 			})
 			.catch(error => {
-				this.createNotification('error');
+				this.createNotification('', error);
 				this.setState({ error });
 			});
 	};
@@ -86,12 +86,11 @@ class SignIn extends Component {
 	};
 
 	render() {
-		const { email, password, error } = this.state;
+		const { email, password } = this.state;
 		const isInvalid = password === '' || email === '';
 		return (
 			<div style={styles.signInForm}>
-				{error && <p style={{ color: 'red' }}>{error.message}</p>}
-				<h4 style={{ color: 'darkred' }}> Sign In </h4>
+				<h3 style={{ color: 'darkred' }}> Sign In </h3>
 				<form onSubmit={this.onSubmit}>
 					<div>
 						<label style={styles.signInLabel}>Email : </label>
